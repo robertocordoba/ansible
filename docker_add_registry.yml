@@ -1,0 +1,14 @@
+- name: Modificacion docker.service para insecure registry
+  hosts: ubuntu
+  tasks: 
+    - name: "Añadir línea a docker service"
+      lineinfile: 
+        path: /lib/systemd/system/docker.service
+        regexp: '(.*sock)\s(?!.*--insecure-registry osiris:8123.*)$'
+        line: '\1 --insecure-registry osiris:8123'
+        backrefs: true
+    - name: "Reiniciar Servicio Docker"
+      service: 
+        name: docker
+        daemon_reload: yes  
+        state: restarted

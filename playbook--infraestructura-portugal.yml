@@ -1,0 +1,9 @@
+---
+- hosts: linpro
+  remote_user: root
+  tasks:
+    - name: test connection
+      ping:
+- import_playbook: copy_network_files.yml
+- import_playbook: playbook-02-middleware.yml
+- import_playbook: playbook-02-backend.yml

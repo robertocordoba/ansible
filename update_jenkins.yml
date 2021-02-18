@@ -1,0 +1,14 @@
+---
+- name: update jenkins
+  hosts: osiris
+  tasks: 
+    - name: "Descargar fichero war"
+      become: true
+      become_user: root
+      get_url: 
+        url: http://updates.jenkins-ci.org/download/war/2.225/jenkins.war
+        dest: /usr/lib/jenkins/
+    #- name: "Reiniciar servicio Jenkins"
+     # service:
+      #  name: jenkins
+       # state: restarted

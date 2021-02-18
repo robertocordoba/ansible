@@ -1,0 +1,16 @@
+---
+- name: modify sudoers adding linpro permissions
+  lineinfile: dest=/etc/sudoers regexp="^root(\s+)ALL=(ALL)(\s+)ALL" insertafter="^root" line='{{ item }}' state=present backup=yes backrefs=yes
+  with items:
+    - '%admin\tALL=(ALL:ALL)\tALL'
+    - 'linpro\s=\sNOPASSWD:\s/opt/linpro/launch_linpro.sh'
+    - 'linpro\s=\sNOPASSWD:\s/usr/bin/mount'
+    - 'linpro\s=\sNOPASSWD:\s/usr/bin/umount'
+    - 'linpro\s=\sNOPASSWD:\s/sbin/shutdown'
+    - 'linpro\s=\sNOPASSWD:\s/opt/linpro/utils/lm/lm'
+    - 'linpro\s=\sNOPASSWD:\s/opt/linpro/utils/lm/lms'
+    - 'linpro\s=\sNOPASSWD:\s/opt/linpro/utils/snc/snc'
+    - 'linpro\s=\sNOPASSWD:\s/opt/linpro/utils/snc/read_tod'
+    - 'linpro\s=\sNOPASSWD:\s/bin/kill'
+    - 'linpro\s=\sNOPASSWD:\s/sbin/wireshark'
+  tags: sudoers

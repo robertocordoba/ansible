@@ -1,0 +1,32 @@
+- name: install docker ubuntu
+  hosts: ubuntu
+  become: true
+  tasks:
+    - name: "Add Docker GPG Key"
+      apt_key: 
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+    - name: "Install other necessary packages"
+      apt:
+        name: "{{ item }}"
+        update_cache: yes
+      with_items: 
+        - "aptitude"
+        - "apt-transport-https"
+        - "ca-certificates"
+        - "curl"
+        - "software-properties-common"
+    - name: "Install Docker"
+      apt: 
+        name: "{{ item }}"
+        update_cache: yes
+      with_items:
+        - "docker.io"
+        - "docker-compose"
+    - name: "Start docker on boot"
+      systemd: 
+        name: docker
+        state: started 
+        enabled: yes   
+- import_playbook: docker_add_registry.yml
+
