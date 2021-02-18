@@ -1,0 +1,24 @@
+---
+- hosts: all
+  tasks: 
+    - name: Instalar Apache
+      yum: 
+        name: httpd 
+        state: latest
+    - name: Instalar samba
+      yum:
+        name: samba
+        state: latest
+    - name: Iniciando servicios
+      service:
+        name: "{{ item }}"
+        enabled: true
+        state: started
+      with_items:
+        - httpd
+        - smb
+    - name: Copiando contenido
+      copy: 
+        content: "Bienvenido a mi web"
+        dest: /var/wwww/htmtl/index.html
+        mode: 0644 
