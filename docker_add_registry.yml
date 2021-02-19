@@ -1,3 +1,4 @@
+---
 - name: Modificacion docker.service para insecure registry
   hosts: ubuntu
   tasks: 
